@@ -1,0 +1,29 @@
+version: '2.4'
+services:
+  fusionscripta:
+    image: fusionscriptservice
+    environment:
+      FUSION_PORT: 8080
+    ports:
+      - '8880:8080'
+    volumes:
+      - ./startswitha.ts:/deno-dir/transform.ts
+    restart: always
+  fusionscriptspeed:
+    image: fusionscriptservice
+    environment:
+      FUSION_PORT: 8080
+    ports:
+      - '8881:8080'
+    volumes:
+      - ./transformone.ts:/deno-dir/transform.ts
+    restart: always
+  fusionscriptstate:
+    image: fusionscriptservice
+    environment:
+      FUSION_PORT: 8080
+    ports:
+      - '8882:8080'
+    volumes:
+      - ./transformenum.ts:/deno-dir/transform.ts
+    restart: always
