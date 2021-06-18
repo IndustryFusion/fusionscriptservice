@@ -1,4 +1,4 @@
-import { isObject, TransformResult, JSONRoot, JSONObject, isNumber, isValidEnumValue } from "./util.ts"
+import { isObject, TransformResult, JSONRoot, JSONObject, mapEnumValue } from "./util.ts"
 
 export function transform(data: JSONRoot): TransformResult {
     if (!isObject(data)) {
@@ -6,32 +6,9 @@ export function transform(data: JSONRoot): TransformResult {
     }
     const objectData = data as JSONObject;
 
-    const result: TransformResult = { status: 201 };
+    mapEnumValue(objectData, 'operatingstate', SourceState, stateMapping);
 
-    const stateKey = 'operatingstate';
-    if (stateKey in objectData) {
-        if (!isNumber(objectData[stateKey])) {
-            return { status: 400, statusMessage: "operatingstate not a number " + objectData[stateKey] };
-        }
-        const operatingstate = objectData[stateKey] as number;
-        if (isValidEnumValue(SourceState, operatingstate)) {
-            const sourceState: SourceState = operatingstate as SourceState;
-            const stateMapping = new Map<SourceState, TargetState>([
-                [SourceState.OFF, TargetState.OFF],
-                [SourceState.IDLE, TargetState.IDLE],
-                [SourceState.STARTING, TargetState.RUNNING],
-                [SourceState.RUNNING, TargetState.RUNNING],
-                [SourceState.STOPPING, TargetState.RUNNING],
-                [SourceState.ERROR, TargetState.ERROR]
-            ]);
-            objectData[stateKey] = stateMapping.get(sourceState) as TargetState;
-        } else {
-            delete objectData[stateKey];
-        }
-    }
-    result.data = objectData;
-
-    return result;
+    return { status: 201, data: objectData };
 }
 
 enum SourceState {
@@ -41,6 +18,7 @@ enum SourceState {
     RUNNING = 2,
     STOPPING = 3,
     ERROR = 4,
+    TEST = 5
 }
 
 enum TargetState {
@@ -49,3 +27,12 @@ enum TargetState {
     RUNNING = 2,
     ERROR = 3
 }
+
+const stateMapping = new Map<SourceState, TargetState>([
+    [SourceState.OFF, TargetState.OFF],
+    [SourceState.IDLE, TargetState.IDLE],
+    [SourceState.STARTING, TargetState.RUNNING],
+    [SourceState.RUNNING, TargetState.RUNNING],
+    [SourceState.STOPPING, TargetState.RUNNING],
+    [SourceState.ERROR, TargetState.ERROR]
+]);

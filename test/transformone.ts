@@ -6,8 +6,6 @@ export function transform(data: JSONRoot): TransformResult {
     }
     const objectData = data as JSONObject;
 
-    const result: TransformResult = { status: 201 };
-
     if ('speed' in objectData) {
         if (!isNumber(objectData['speed'])) {
             return { status: 400, statusMessage: "Speed not a number " + objectData['speed'] };
@@ -15,7 +13,6 @@ export function transform(data: JSONRoot): TransformResult {
         const speed = objectData['speed'] as number;
         objectData['speed'] = speed / 100;
     }
-    result.data = objectData;
 
-    return result;
+    return { status: 201, data: objectData };
 }

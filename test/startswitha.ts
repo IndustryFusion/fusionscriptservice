@@ -4,12 +4,10 @@ export function transform(data: JSONRoot): TransformResult {
     if (!isObject(data)) {
         return { status: 400, statusMessage: "Only JSON objects supported" };
     }
-    const objectData = data as JSONObject;
-
-    const result: TransformResult = { status: 201 };
+    let objectData = data as JSONObject;
 
     const filteredProps = Object.entries(objectData).filter((entry) => entry[0].toLowerCase().startsWith("a"));
-    result.data = Object.fromEntries(filteredProps);
+    objectData = Object.fromEntries(filteredProps);
 
-    return result;
+    return { status: 201, data: objectData };
 }
