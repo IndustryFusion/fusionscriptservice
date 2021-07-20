@@ -16,10 +16,19 @@ export function transform(data: JSONRoot): TransformResult {
         }
         const jahr = objectData['Jahr_Folgewartung'] as number;
         const monatTag = objectData['MonatTag_Folgewartung'] as number;
-        const strDate = String(bcdToInt(monatTag)).padStart(4, "0") + String(bcdToInt(jahr) + 2000).padStart(4, "0");
+
+        const monatTagStr = String(bcdToInt(monatTag)).padStart(4, "0");
+        const strDate = monatTagStr.slice(2) + monatTagStr.slice(0,2) + String(bcdToInt(jahr)).padStart(2, "0");
         objectData['Datum_Folgewartung'] = strDate;
-        const maintenanceDate = datetime.parse(strDate, "ddMMyyyy")
-        objectData['Stunden_Folgewartung'] = datetime.difference(new Date(), maintenanceDate, { units: ["hours"] }).hours as number;
+
+        const maintenanceDate = datetime.parse(strDate, "ddMMyy")
+        const now = new Date();
+
+        let datediffHours = datetime.difference(new Date(), maintenanceDate, { units: ["hours"] }).hours as number;
+        if (maintenanceDate < now) {
+            datediffHours = -datediffHours;
+        }
+        objectData['Stunden_Folgewartung'] = datediffHours;
     }
 
     return { status: 201, data: objectData };
