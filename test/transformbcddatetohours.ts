@@ -24,7 +24,7 @@ export function transform(data: JSONRoot): TransformResult {
         const maintenanceDate = datetime.parse(strDate, "ddMMyy")
         const now = new Date();
 
-        let datediffHours = datetime.difference(new Date(), maintenanceDate, { units: ["hours"] }).hours as number;
+        let datediffHours = datetime.difference(now, maintenanceDate, { units: ["hours"] }).hours as number;
         if (maintenanceDate < now) {
             datediffHours = -datediffHours;
         }
