@@ -1,38 +1,77 @@
-version: '2.4'
+version: "2.4"
 services:
   fusionscripta:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
+      FUSION_DOWNSTREAM_URL: "http://echo:8100/"
     ports:
-      - '8880:8080'
+      - "8880:8080"
     volumes:
       - ./startswitha.ts:/deno-dir/transform.ts
+    depends_on:
+      - echo
     restart: always
   fusionscriptspeed:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
+      FUSION_DOWNSTREAM_URL: "http://echo:8100/"
+      FUSION_DOWNSTREAM_HOST: "echo"
     ports:
-      - '8881:8080'
+      - "8881:8080"
     volumes:
       - ./transformone.ts:/deno-dir/transform.ts
+    depends_on:
+      - echo
     restart: always
   fusionscriptstate:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
+      FUSION_DOWNSTREAM_URL: "http://echo:8100/"
+      FUSION_DOWNSTREAM_HOST: "echo"
     ports:
-      - '8882:8080'
+      - "8882:8080"
     volumes:
       - ./transformenum.ts:/deno-dir/transform.ts
+    depends_on:
+      - echo
     restart: always
   fusionscriptstatenumber:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
+      FUSION_DOWNSTREAM_URL: "http://echo:8100/"
+      FUSION_DOWNSTREAM_HOST: "echo"
     ports:
-      - '8883:8080'
+      - "8883:8080"
     volumes:
       - ./transformmap.ts:/deno-dir/transform.ts
+    depends_on:
+      - echo
     restart: always
+  fusionscriptbcddatetohours:
+    image: fusionscriptservice
+    environment:
+      FUSION_PORT: 8080
+      FUSION_DOWNSTREAM_URL: "http://echo:8100/"
+      FUSION_DOWNSTREAM_HOST: "echo"
+    ports:
+      - "8884:8080"
+    volumes:
+      - ./transformbcddatetohours.ts:/deno-dir/transform.ts
+    depends_on:
+      - echo
+    restart: always
+  echo:
+    image: "node:14"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - "8100:8100"
+    command: "npx http-echo-server 8100"

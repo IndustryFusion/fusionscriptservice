@@ -2,7 +2,7 @@ import { isObject, TransformResult, JSONRoot, JSONObject, mapEnumValue } from ".
 
 export function transform(data: JSONRoot): TransformResult {
     if (!isObject(data)) {
-        return { status: 400, statusMessage: "Only JSON objects supported" };
+        return { status: 400, statusText: "Only JSON objects supported" };
     }
     const objectData = data as JSONObject;
 

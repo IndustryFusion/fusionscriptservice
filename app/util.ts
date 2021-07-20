@@ -24,7 +24,7 @@ export type JSONRoot =
 
 export interface TransformResult {
     status: number;
-    statusMessage?: string;
+    statusText?: string;
     data?: JSONRoot;
 }
 
@@ -92,4 +92,22 @@ export function mapNumberValue(objectData: JSONObject, key: string, enumMap: Map
             return;
         }
     }
+}
+
+export function ensureTrailingSlash(url: string) {
+    if (!url.endsWith('/')) {
+        return url + '/';
+    }
+    return url;
+}
+
+export function bcdToInt(bcd: number) {
+    let result = 0;
+    let multiplier = 1;
+    while (bcd > 0) {
+        result += ((bcd & 15) * multiplier);
+        bcd = bcd >>> 4;
+        multiplier *= 10;
+    }
+    return result;
 }

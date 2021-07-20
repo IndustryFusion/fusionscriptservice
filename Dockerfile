@@ -29,4 +29,4 @@ COPY app/* /deno-dir/
 WORKDIR /deno-dir/
 RUN /bin/deno cache --reload --lock=lock.json deps.ts
 
-ENTRYPOINT /bin/deno run --allow-net=0.0.0.0:8080 --allow-env=FUSION_PORT --cached-only service.ts
+ENTRYPOINT /bin/deno run --allow-net=0.0.0.0,$FUSION_DOWNSTREAM_HOST --allow-env=FUSION_PORT,FUSION_DOWNSTREAM_URL --cached-only service.ts
