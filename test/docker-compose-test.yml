@@ -5,6 +5,7 @@ services:
     environment:
       FUSION_PORT: 8080
       FUSION_DOWNSTREAM_URL: "http://echo:8100/"
+      FUSION_DOWNSTREAM_HOST: "echo"
     ports:
       - "8880:8080"
     volumes:
