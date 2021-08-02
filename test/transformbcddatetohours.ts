@@ -9,7 +9,7 @@ export function transform(data: JSONRoot): TransformResult {
 
     if ('Jahr_Folgewartung' in objectData && 'MonatTag_Folgewartung' in objectData) {
         if (!isNumber(objectData['Jahr_Folgewartung'])) {
-            return { status: 400, statusText: "SpMonatTag_Folgewartungeed not a number " + objectData['Jahr_Folgewartung'] };
+            return { status: 400, statusText: "MonatTag_Folgewartung not a number " + objectData['Jahr_Folgewartung'] };
         }
         if (!isNumber(objectData['MonatTag_Folgewartung'])) {
             return { status: 400, statusText: "MonatTag_Folgewartung not a number " + objectData['MonatTag_Folgewartung'] };

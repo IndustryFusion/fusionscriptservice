@@ -38,7 +38,6 @@ const transformData = async (ctx: RouterContext) => {
         if (downstreamResponse.statusText) {
             ctx.response.body = downstreamResponse.statusText;
         }
-
     } else {
         ctx.response.status = transformResponse.status;
         if (transformResponse.statusText) {
@@ -50,8 +49,9 @@ const transformData = async (ctx: RouterContext) => {
 router
     .post('/:jobId', transformData);
 
+log.info("Server starting on port " + SERVER_PORT);
+
 app
     .use(router.routes())
     .use(router.allowedMethods())
     .listen({ port: SERVER_PORT });
-
