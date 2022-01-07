@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:impish-20211015
 
 ENV DENO_TARGET=x86_64-unknown-linux-gnu
 ENV DENO_VERSION=v1.11.1
