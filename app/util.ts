@@ -47,7 +47,7 @@ export function isValidEnumValue(enumToCheck: unknown, value: unknown): boolean 
     return Object.values(enumToCheck as Record<string, unknown>).indexOf(value) >= 0;
 }
 
-export function mapEnumValue(objectData: JSONObject, key: string, sourceEnum: unknown, enumMap: Map<number, number>): void {
+export function mapEnumValue(objectData: JSONObject, key: string, sourceEnum: unknown, enumMap: Map<number, number | string>): void {
     if (!isObject(sourceEnum)) {
         const message = `Invalid sourceEnum ${sourceEnum}`;
         log.error(message)
@@ -62,7 +62,7 @@ export function mapEnumValue(objectData: JSONObject, key: string, sourceEnum: un
         const enumValue = objectData[key] as number;
         if (isValidEnumValue(sourceEnum, enumValue)) {
             if (enumMap.has(enumValue)) {
-                objectData[key] = enumMap.get(enumValue) as number;
+                objectData[key] = enumMap.get(enumValue) as number | string;
             } else {
                 log.warning(`Value ${enumValue} for ${key} not mapped`)
                 delete objectData[key];

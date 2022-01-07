@@ -1,6 +1,6 @@
 version: "2.4"
 services:
-  fusionscripta:
+  a:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
@@ -13,7 +13,7 @@ services:
     depends_on:
       - echo
     restart: always
-  fusionscriptspeed:
+  speed:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
@@ -26,7 +26,7 @@ services:
     depends_on:
       - echo
     restart: always
-  fusionscriptstate:
+  state:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
@@ -39,7 +39,7 @@ services:
     depends_on:
       - echo
     restart: always
-  fusionscriptstatenumber:
+  statenumber:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
@@ -52,7 +52,7 @@ services:
     depends_on:
       - echo
     restart: always
-  fusionscriptbcddatetohours:
+  bcddatetohours:
     image: fusionscriptservice
     environment:
       FUSION_PORT: 8080
@@ -62,6 +62,19 @@ services:
       - "8884:8080"
     volumes:
       - ./transformbcddatetohours.ts:/deno-dir/transform.ts
+    depends_on:
+      - echo
+    restart: always
+  transformenumstring:
+    image: fusionscriptservice
+    environment:
+      FUSION_PORT: 8080
+      FUSION_DOWNSTREAM_URL: "http://echo:8100/"
+      FUSION_DOWNSTREAM_HOST: "echo"
+    ports:
+      - "8885:8080"
+    volumes:
+      - ./transformenumstring.ts:/deno-dir/transform.ts
     depends_on:
       - echo
     restart: always

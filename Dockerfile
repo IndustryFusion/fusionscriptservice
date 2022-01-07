@@ -1,7 +1,7 @@
 FROM ubuntu:impish-20211015
 
 ENV DENO_TARGET=x86_64-unknown-linux-gnu
-ENV DENO_VERSION=v1.11.1
+ENV DENO_VERSION=v1.17.2
 
 RUN apt-get -qq update \
  && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
