@@ -1,4 +1,4 @@
-FROM ubuntu:impish-20211015
+FROM ubuntu:21.10
 
 ENV DENO_TARGET=x86_64-unknown-linux-gnu
 ENV DENO_VERSION=v1.17.2
